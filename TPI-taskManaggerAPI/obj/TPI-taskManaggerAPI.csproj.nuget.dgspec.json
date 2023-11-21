@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Facultad\\PROGRAMACION 3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj": {}
+    "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj": {}
   },
   "projects": {
-    "F:\\Facultad\\PROGRAMACION 3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj": {
+    "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Facultad\\PROGRAMACION 3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj",
+        "projectUniqueName": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj",
         "projectName": "TPI-taskManaggerAPI",
-        "projectPath": "F:\\Facultad\\PROGRAMACION 3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj",
+        "projectPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI.csproj",
         "packagesPath": "C:\\Users\\Tomi\\.nuget\\packages\\",
-        "outputPath": "F:\\Facultad\\PROGRAMACION 3\\TPI-taskManaggerAPI\\TPI-taskManaggerAPI\\obj\\",
+        "outputPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\TPI-taskManaggerAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Tomi\\AppData\\Roaming\\NuGet\\NuGet.Config",

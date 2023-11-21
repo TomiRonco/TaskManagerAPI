@@ -61,7 +61,7 @@ namespace TPI_taskManaggerAPI.DBContext
 
             modelBuilder.Entity<Entities.Task>()
                 .HasOne(t => t.Admin)
-                .WithMany()
+                .WithMany(a => a.CreatedTasks)
                 .HasForeignKey(t => t.AdminId);
 
             modelBuilder.Entity<Entities.Task>()
