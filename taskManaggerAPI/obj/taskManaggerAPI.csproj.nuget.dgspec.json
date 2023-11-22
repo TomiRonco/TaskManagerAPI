@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Facultad\\PROGRAMACION 3\\taskManaggerAPI\\taskManaggerAPI\\taskManaggerAPI.csproj": {}
+    "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj": {}
   },
   "projects": {
-    "F:\\Facultad\\PROGRAMACION 3\\taskManaggerAPI\\taskManaggerAPI\\taskManaggerAPI.csproj": {
+    "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Facultad\\PROGRAMACION 3\\taskManaggerAPI\\taskManaggerAPI\\taskManaggerAPI.csproj",
+        "projectUniqueName": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
         "projectName": "taskManaggerAPI",
-        "projectPath": "F:\\Facultad\\PROGRAMACION 3\\taskManaggerAPI\\taskManaggerAPI\\taskManaggerAPI.csproj",
+        "projectPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
         "packagesPath": "C:\\Users\\Tomi\\.nuget\\packages\\",
-        "outputPath": "F:\\Facultad\\PROGRAMACION 3\\taskManaggerAPI\\taskManaggerAPI\\obj\\",
+        "outputPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Tomi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -43,6 +43,10 @@
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[6.0.24, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[6.0.23, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
