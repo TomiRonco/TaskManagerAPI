@@ -94,7 +94,7 @@ namespace taskManaggerAPI.Controllers
         }
 
 
-        [HttpDelete("DeleteProject/{id}")]
+        [HttpDelete("CompleteProject/{id}")]
         public IActionResult DeleteProject(int id)
         {
             try
