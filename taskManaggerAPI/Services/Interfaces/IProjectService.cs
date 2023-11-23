@@ -6,6 +6,7 @@ namespace taskManaggerAPI.Services.Interfaces
     {
         List<Project> GetProjectIncompleted();
         List<Project> GetProjectCompleted();
+        List<Project> GetAdminProjects(int adminId);
         Project GetProjectById(int id);
         int CreateProject(Project project);
         Project UpdateProject(Project project);

@@ -41,7 +41,8 @@ namespace taskManaggerAPI.Migrations
                     ProjectName = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     AdminId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ClientId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ClientId = table.Column<int>(type: "INTEGER", nullable: false),
+                    State = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,8 +108,8 @@ namespace taskManaggerAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Projects",
-                columns: new[] { "Id", "AdminId", "ClientId", "Description", "ProjectName" },
-                values: new object[] { 1, 1, 2, "This is an example project", "Example Project" });
+                columns: new[] { "Id", "AdminId", "ClientId", "Description", "ProjectName", "State" },
+                values: new object[] { 1, 1, 2, "This is an example project", "Example Project", true });
 
             migrationBuilder.InsertData(
                 table: "Comments",

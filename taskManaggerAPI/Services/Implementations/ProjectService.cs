@@ -27,11 +27,9 @@ namespace taskManaggerAPI.Services.Implementations
             return _taskContext.Projects.FirstOrDefault(p => p.Id == id);
         }
 
-        public Project UpdateProject(Project project)
+        public List<Project> GetAdminProjects(int adminId)
         {
-            _taskContext.Update(project);
-            _taskContext.SaveChanges();
-            return project;
+            return _taskContext.Projects.Where(p => p.AdminId == adminId).ToList();
         }
 
         public int CreateProject(Project project)
@@ -39,6 +37,12 @@ namespace taskManaggerAPI.Services.Implementations
             _taskContext.Add(project);
             _taskContext.SaveChanges();
             return project.Id;
+        }
+        public Project UpdateProject(Project project)
+        {
+            _taskContext.Update(project);
+            _taskContext.SaveChanges();
+            return project;
         }
 
         public void DeleteProject(int proyectId)

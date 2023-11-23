@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using taskManaggerAPI.Data.Entities;
 using taskManaggerAPI.Data.Models;
+using taskManaggerAPI.DBContext;
+using taskManaggerAPI.Services.Implementations;
 using taskManaggerAPI.Services.Interfaces;
 
 namespace taskManaggerAPI.Controllers
@@ -14,11 +16,13 @@ namespace taskManaggerAPI.Controllers
     {
         private readonly IAdminService _adminService;
         private readonly IUserService _userService;
+        private readonly IProjectService _projectService;
 
-        public AdminController(IUserService userService, IAdminService adminService)
+        public AdminController(IUserService userService, IAdminService adminService, IProjectService projectService)
         {
             _userService = userService;
             _adminService = adminService;
+            _projectService = projectService;
         }
 
         [HttpGet("GetAdminsTrue")]
@@ -65,6 +69,30 @@ namespace taskManaggerAPI.Controllers
             }
 
             return Ok(admin);
+        }
+
+        [HttpGet("GetAdminProjects/{adminId}")]
+        public IActionResult GetAdminProjects(int adminId)
+        {
+            try
+            {
+                var admin = _adminService.GetAdminById(adminId);
+
+                if (admin == null)
+                {
+                    return NotFound($"El admin de ID: {adminId} no fue encontrado");
+                }
+
+                var projects = _projectService.GetAdminProjects(adminId);
+
+                var projectNames = projects.Select(p => p.ProjectName).ToList();
+
+                return Ok(projectNames);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("CreateNewAdmin")]
