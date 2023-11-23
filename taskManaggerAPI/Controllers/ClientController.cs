@@ -19,10 +19,10 @@ namespace taskManaggerAPI.Controllers
             _clientService = clientService;
         }
 
-        [HttpGet("GetClientsTrue")]
-        public IActionResult GetClientsTrue()
+        [HttpGet("GetClients")]
+        public IActionResult GetClients()
         {
-            var clients = _clientService.GetClientsTrue();
+            var clients = _clientService.GetClients();
 
             try
             {
@@ -35,21 +35,6 @@ namespace taskManaggerAPI.Controllers
 
         }
 
-        [HttpGet("GetClientsFalse")]
-        public IActionResult GetClientsFalse()
-        {
-            var clients = _clientService.GetClientsFalse();
-
-            try
-            {
-                return Ok(clients.Where(x => x.State == false));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
 
 
         [HttpGet("GetClientById{id}")]

@@ -25,30 +25,14 @@ namespace taskManaggerAPI.Controllers
             _projectService = projectService;
         }
 
-        [HttpGet("GetAdminsTrue")]
-        public IActionResult GetAdminsTrue()
+        [HttpGet("GetAdmins")]
+        public IActionResult GetAdmins()
         {
-            var admins = _adminService.GetAdminsTrue();
+            var admins = _adminService.GetAdmins();
 
             try
             {
                 return Ok(admins.Where(x => x.State == true));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-        [HttpGet("GetAdminsFalse")]
-        public IActionResult GetAdminsFalse()
-        {
-            var admins = _adminService.GetAdminsFalse();
-
-            try
-            {
-                return Ok(admins.Where(x => x.State == false));
             }
             catch (Exception ex)
             {
@@ -74,25 +58,28 @@ namespace taskManaggerAPI.Controllers
         [HttpGet("GetAdminProjects/{adminId}")]
         public IActionResult GetAdminProjects(int adminId)
         {
-            try
-            {
-                var admin = _adminService.GetAdminById(adminId);
+            var admin = _adminService.GetAdminById(adminId);
 
-                if (admin == null)
+            if (admin == null)
+            {
+                return NotFound($"El admin de ID: {adminId} no fue encontrado");
+            }
+
+            var projects = _projectService.GetAdminProjects(adminId);
+
+            var adminWithProjects = new AdminProjectsDto
+            {
+                AdminId = admin.Id,
+                AdminName = admin.Name,
+                Projects = projects.Select(p => new ProjectDto
                 {
-                    return NotFound($"El admin de ID: {adminId} no fue encontrado");
-                }
+                    ProjectId = p.Id,
+                    ProjectName = p.ProjectName
+                    // Otros campos del proyecto si es necesario
+                }).ToList()
+            };
 
-                var projects = _projectService.GetAdminProjects(adminId);
-
-                var projectNames = projects.Select(p => p.ProjectName).ToList();
-
-                return Ok(projectNames);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(adminWithProjects);
         }
 
         [HttpPost("CreateNewAdmin")]

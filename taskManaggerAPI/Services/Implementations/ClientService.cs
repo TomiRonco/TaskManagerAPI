@@ -13,12 +13,7 @@ namespace taskManaggerAPI.Services.Implementations
                 _taskContext = taskContext;
         }
 
-        public List<User> GetClientsTrue()
-        {
-            return _taskContext.Users.Where(p => p.UserType == "Client").ToList();
-        }
-
-        public List<User> GetClientsFalse()
+        public List<User> GetClients()
         {
             return _taskContext.Users.Where(p => p.UserType == "Client").ToList();
         }

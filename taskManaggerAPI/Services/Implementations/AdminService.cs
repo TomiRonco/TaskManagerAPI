@@ -14,15 +14,12 @@ namespace taskManaggerAPI.Services.Implementations
             _taskContext = taskContext;
         }
 
-        public List<User> GetAdminsTrue()
+        public List<User> GetAdmins()
         {
             return _taskContext.Users.Where(p => p.UserType == "Admin").ToList();
         }
 
-        public List<User> GetAdminsFalse()
-        {
-            return _taskContext.Users.Where(p => p.UserType == "Admin").ToList();
-        }
+       
 
         public Admin GetAdminById(int id)
         {

@@ -4,8 +4,7 @@ namespace taskManaggerAPI.Services.Interfaces
 {
     public interface IAdminService
     {
-        List<User> GetAdminsTrue();
-        List<User> GetAdminsFalse();
+        List<User> GetAdmins();
         Admin GetAdminById(int id);
         Admin UpdateAdmin(Admin admin);
 

@@ -4,8 +4,7 @@ namespace taskManaggerAPI.Services.Interfaces
 {
     public interface IClientService
     {
-        List<User> GetClientsTrue();
-        List<User> GetClientsFalse();
+        List<User> GetClients();  
         Client GetClientById(int id);
         Client UpdateClient(Client client);
     }
