@@ -25,10 +25,22 @@ namespace taskManaggerAPI.Controllers
         public IActionResult GetProjectCompleted()
         {
             var projects = _projectService.GetProjectCompleted();
+            var projectDtos = projects
+                .Where(x => x.State == false)
+                .Select(p => new ProjectGetDto
+                {
+                    Id = p.Id,
+                    projectName = p.ProjectName,
+                    Description = p.Description,
+                    adminId = p.AdminId,
+                    clientId = p.ClientId,
+                    state = p.State
+                })
+                .ToList();
 
             try
             {
-                return Ok(projects.Where(x => x.State == false));
+                return Ok(projectDtos);
             }
             catch (Exception ex)
             {
@@ -41,10 +53,22 @@ namespace taskManaggerAPI.Controllers
         public IActionResult GetProjectIncompleted()
         {
             var projects = _projectService.GetProjectIncompleted();
+            var projectDtos = projects
+                .Where(x => x.State == true)
+                .Select(p => new ProjectGetDto
+                {
+                    Id = p.Id,
+                    projectName = p.ProjectName,
+                    Description = p.Description,
+                    adminId = p.AdminId,
+                    clientId = p.ClientId,
+                    state = p.State
+                })
+                .ToList();
 
             try
             {
-                return Ok(projects.Where(x => x.State == true));
+                return Ok(projectDtos);
             }
             catch (Exception ex)
             {
@@ -64,7 +88,24 @@ namespace taskManaggerAPI.Controllers
                 return NotFound($"El proyecto de ID: {id} no fue encontrado");
             }
 
-            return Ok(project);
+            var projectDto = new ProjectGetDto
+            {
+                Id = project.Id,
+                projectName = project.ProjectName,
+                Description = project.Description,
+                adminId = project.AdminId,
+                clientId = project.ClientId,
+                state = project.State
+            };
+
+            try
+            {
+                return Ok(projectDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("CreateNewProject")]
@@ -93,26 +134,6 @@ namespace taskManaggerAPI.Controllers
 
         }
 
-
-        [HttpDelete("CompleteProject/{id}")]
-        public IActionResult DeleteProject(int id)
-        {
-            try
-            {
-                var existingProject = _projectService.GetProjectById(id);
-                if (existingProject == null)
-                {
-                    return NotFound($"No se encontró ningún proyecto con el ID: {id}");
-                }
-                _projectService.DeleteProject(id);
-                return Ok($"Project con ID: {id} eliminado");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPut("UpdateProject{id}")]
         public IActionResult UpdateProject([FromRoute] int id, [FromBody] ProjectPutDto project)
         {
@@ -136,6 +157,25 @@ namespace taskManaggerAPI.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Error al actualizar el Proyecto: {ex.Message}");
+            }
+        }
+
+        [HttpPut("CompleteProject/{id}")]
+        public IActionResult DeleteProject(int id)
+        {
+            try
+            {
+                var existingProject = _projectService.GetProjectById(id);
+                if (existingProject == null)
+                {
+                    return NotFound($"No se encontró ningún proyecto con el ID: {id}");
+                }
+                _projectService.DeleteProject(id);
+                return Ok($"Project con ID: {id} completado");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

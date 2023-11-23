@@ -10,8 +10,8 @@ using taskManaggerAPI.DBContext;
 namespace taskManaggerAPI.Migrations
 {
     [DbContext(typeof(taskContext))]
-    [Migration("20231123184044_primerMigracion3")]
-    partial class primerMigracion3
+    [Migration("20231123194813_primerMigracion4")]
+    partial class primerMigracion4
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

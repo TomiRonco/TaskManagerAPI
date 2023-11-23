@@ -28,19 +28,29 @@ namespace taskManaggerAPI.Controllers
         [HttpGet("GetAdmins")]
         public IActionResult GetAdmins()
         {
-            var admins = _adminService.GetAdmins();
-
             try
             {
-                return Ok(admins.Where(x => x.State == true));
+            var admins = _adminService.GetAdmins();
+
+                var adminDtos = admins
+                   .Where(x => x.State == true)
+                   .Select(admin => new AdminsDto
+                   {
+                       Id = admin.Id,
+                       Role = admin.UserType,
+                       Name = admin.Name,
+                       UserName = admin.UserName,
+                       Email = admin.Email,
+                       Password = admin.Password,
+                       State = admin.State,
+                   });
+                return Ok(adminDtos);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
         }
-
 
         [HttpGet("GetAdminById{id}")]
         public IActionResult GetAdminById(int id)
@@ -49,10 +59,20 @@ namespace taskManaggerAPI.Controllers
 
             if (admin == null)
             {
-                return NotFound($"El admmin de ID: {id} no fue encontrado");
+                return NotFound($"El admin de ID: {id} no fue encontrado");
             }
 
-            return Ok(admin);
+            var adminDto = new AdminsDto
+            {
+                Id = admin.Id,
+                Role = admin.UserType,
+                Name = admin.Name,
+                UserName = admin.UserName,
+                Email = admin.Email,
+                Password = admin.Password,
+                State = admin.State,
+            };
+            return Ok(adminDto);
         }
 
         [HttpGet("GetAdminProjects/{adminId}")]
@@ -75,7 +95,6 @@ namespace taskManaggerAPI.Controllers
                 {
                     ProjectId = p.Id,
                     ProjectName = p.ProjectName
-                    // Otros campos del proyecto si es necesario
                 }).ToList()
             };
 
@@ -101,27 +120,6 @@ namespace taskManaggerAPI.Controllers
                 };
                 int id = _userService.CreateUser(admin);
                 return Ok($"Admin creado exitosamente con id: {id}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-
-        [HttpDelete("DeleteAdmin/{id}")]
-        public IActionResult DeleteAdmin(int id)
-        {
-            try
-            {
-                var existingAdmin = _adminService.GetAdminById(id);
-                if (existingAdmin == null)
-                {
-                    return NotFound($"No se encontró ningún Admin con el ID: {id}");
-                }
-                _userService.DeleteUser(id);
-                return Ok($"Admin con ID: {id} eliminado");
             }
             catch (Exception ex)
             {
@@ -158,5 +156,24 @@ namespace taskManaggerAPI.Controllers
             }
         }
 
+        [HttpDelete("DeleteAdmin/{id}")]
+        public IActionResult DeleteAdmin(int id)
+        {
+            try
+            {
+                var existingAdmin = _adminService.GetAdminById(id);
+                if (existingAdmin == null)
+                {
+                    return NotFound($"No se encontró ningún Admin con el ID: {id}");
+                }
+                _userService.DeleteUser(id);
+                return Ok($"Admin con ID: {id} eliminado");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }

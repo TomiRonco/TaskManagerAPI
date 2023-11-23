@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using taskManaggerAPI.Data.Entities;
 using taskManaggerAPI.Data.Models;
+using taskManaggerAPI.Services.Implementations;
 using taskManaggerAPI.Services.Interfaces;
 
 namespace taskManaggerAPI.Controllers
@@ -22,20 +23,29 @@ namespace taskManaggerAPI.Controllers
         [HttpGet("GetClients")]
         public IActionResult GetClients()
         {
-            var clients = _clientService.GetClients();
-
             try
             {
-                return Ok(clients.Where(x => x.State == true));
+                var clients = _clientService.GetClients();
+
+                var clientDtos = clients
+                   .Where(x => x.State == true)
+                   .Select(client => new ClientsDto
+                   {
+                       Id = client.Id,
+                       Role = client.UserType,
+                       Name = client.Name,
+                       UserName = client.UserName,
+                       Email = client.Email,
+                       Password = client.Password,
+                       State = client.State,
+                   });
+                return Ok(clientDtos);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
         }
-
-
 
         [HttpGet("GetClientById{id}")]
         public IActionResult GetClientById(int id)
@@ -47,7 +57,18 @@ namespace taskManaggerAPI.Controllers
                 return NotFound($"El admmin de ID: {id} no fue encontrado");
             }
 
-            return Ok(client);
+            var clientDto = new ClientsDto
+            {
+                Id = client.Id,
+                Role = client.UserType,
+                Name = client.Name,
+                UserName = client.UserName,
+                Email = client.Email,
+                Password = client.Password,
+                State = client.State,
+            };
+
+            return Ok(clientDto);
         }
 
         [HttpPost("CreateNewClient")]
@@ -69,27 +90,6 @@ namespace taskManaggerAPI.Controllers
                 };
                 int id = _userService.CreateUser(client);
                 return Ok($"Admin creado exitosamente con id: {id}");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-
-        [HttpDelete("DeleteClient/{id}")]
-        public IActionResult DeleteClient(int id)
-        {
-            try
-            {
-                var existingClient = _clientService.GetClientById(id);
-                if (existingClient == null)
-                {
-                    return NotFound($"No se encontró ningún Client con el ID: {id}");
-                }
-                _userService.DeleteUser(id);
-                return Ok($"Client con ID: {id} eliminado");
             }
             catch (Exception ex)
             {
@@ -124,6 +124,26 @@ namespace taskManaggerAPI.Controllers
             {
                 return BadRequest($"Error al actualizar el Cliente: {ex.Message}");
             }
+        }
+
+        [HttpDelete("DeleteClient/{id}")]
+        public IActionResult DeleteClient(int id)
+        {
+            try
+            {
+                var existingClient = _clientService.GetClientById(id);
+                if (existingClient == null)
+                {
+                    return NotFound($"No se encontró ningún Client con el ID: {id}");
+                }
+                _userService.DeleteUser(id);
+                return Ok($"Client con ID: {id} eliminado");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

@@ -10,8 +10,8 @@ using taskManaggerAPI.DBContext;
 namespace taskManaggerAPI.Migrations
 {
     [DbContext(typeof(taskContext))]
-    [Migration("20231123184620_primerMigracion4")]
-    partial class primerMigracion4
+    [Migration("20231123195718_primerMigracion7")]
+    partial class primerMigracion7
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,6 +114,9 @@ namespace taskManaggerAPI.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("State")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -154,6 +157,7 @@ namespace taskManaggerAPI.Migrations
                             Email = "tomi@gmail.com",
                             Name = "Tomas",
                             Password = "123",
+                            State = true,
                             UserName = "TomasR",
                             Role = "Admin"
                         },
@@ -163,6 +167,7 @@ namespace taskManaggerAPI.Migrations
                             Email = "renzo@gmail.com",
                             Name = "Renzo",
                             Password = "123",
+                            State = true,
                             UserName = "RenzoT",
                             Role = "Admin"
                         });
@@ -185,6 +190,7 @@ namespace taskManaggerAPI.Migrations
                             Email = "javitonini@gmail.com",
                             Name = "Javier",
                             Password = "123",
+                            State = true,
                             UserName = "Javier",
                             Role = "Client"
                         },
@@ -194,6 +200,7 @@ namespace taskManaggerAPI.Migrations
                             Email = "javitonini@gmail.com",
                             Name = "Javier",
                             Password = "123",
+                            State = true,
                             UserName = "Javier",
                             Role = "Client"
                         });

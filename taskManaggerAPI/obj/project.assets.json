@@ -2309,24 +2309,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\renzo\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Tomi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\renzo\\Desktop\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
+      "projectUniqueName": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
       "projectName": "taskManaggerAPI",
-      "projectPath": "C:\\Users\\renzo\\Desktop\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
-      "packagesPath": "C:\\Users\\renzo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\renzo\\Desktop\\Proyecto-TPI-Prog3\\taskManaggerAPI\\obj\\",
+      "projectPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
+      "packagesPath": "C:\\Users\\Tomi\\.nuget\\packages\\",
+      "outputPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\renzo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Tomi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2416,7 +2411,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

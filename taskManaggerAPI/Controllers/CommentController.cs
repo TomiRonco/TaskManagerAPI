@@ -21,18 +21,32 @@ namespace taskManaggerAPI.Controllers
             _commentService = commentService;
         }
 
-
-        [HttpGet("GetCommentById{id}")]
-        public IActionResult GetCommentById(int id)
+        [HttpGet("GetCommentsByProjectId/{projectId}")]
+        public IActionResult GetCommentsByProjectId(int projectId)
         {
-            var comment = _commentService.GetCommentById(id);
-
-            if (comment == null)
+            try
             {
-                return NotFound($"El comentario de ID: {id} no fue encontrado");
-            }
+                var comment = _commentService.GetCommentById(projectId);
 
-            return Ok(comment);
+                if (comment == null)
+                {
+                    return NotFound($"El comentario de ID: {projectId} no fue encontrado");
+                }
+
+                var commentDto = new CommentDto
+                {
+                    Id = comment.Id,
+                    Content = comment.Content,
+                    ClientId = comment.ClientId,
+                    ProjectId = comment.ProjectId
+                };
+
+                return Ok(commentDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al obtener comentario por ID: {ex.Message}");
+            }
         }
 
         [HttpPost("CreateNewComment")]
@@ -60,26 +74,6 @@ namespace taskManaggerAPI.Controllers
 
         }
 
-
-        [HttpDelete("DeleteComment/{id}")]
-        public IActionResult DeleteComment(int id)
-        {
-            try
-            {
-                var existingComment = _commentService.GetCommentById(id);
-                if (existingComment == null)
-                {
-                    return NotFound($"No se encontró ningún comentario con el ID: {id}");
-                }
-                _commentService.DeleteComment(id);
-                return Ok($"Comentario con ID: {id} eliminado");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPut("UpdateComment{id}")]
         public IActionResult UpdateComment([FromRoute] int id, [FromBody] CommentPutDto comment)
         {
@@ -102,6 +96,25 @@ namespace taskManaggerAPI.Controllers
             catch (Exception ex)
             {
                 return BadRequest($"Error al actualizar el Comentario: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("DeleteComment/{id}")]
+        public IActionResult DeleteComment(int id)
+        {
+            try
+            {
+                var existingComment = _commentService.GetCommentById(id);
+                if (existingComment == null)
+                {
+                    return NotFound($"No se encontró ningún comentario con el ID: {id}");
+                }
+                _commentService.DeleteComment(id);
+                return Ok($"Comentario con ID: {id} eliminado");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

@@ -7,7 +7,7 @@
 namespace taskManaggerAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionInicial : Migration
+    public partial class primerMigracion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
