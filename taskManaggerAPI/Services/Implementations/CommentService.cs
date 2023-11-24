@@ -38,8 +38,12 @@ namespace taskManaggerAPI.Services.Implementations
 
         public void DeleteComment(int commentId)
         {
-            _taskContext.Remove(commentId);
-            _taskContext.SaveChanges();
+            var comment = _taskContext.Comments.Find(commentId);
+            if (comment != null)
+            {
+                _taskContext.Remove(comment);
+                _taskContext.SaveChanges();
+            }
         }
     }
 }

@@ -98,6 +98,4 @@ namespace taskManaggerAPI.DBContext
             base.OnModelCreating(modelBuilder);
         }
     }
-
-        
 }

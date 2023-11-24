@@ -26,26 +26,25 @@ namespace taskManaggerAPI.Controllers
         {
             try
             {
-                var comment = _commentService.GetCommentById(projectId);
+                var comments = _commentService.GetCommentsByProjectId(projectId);
 
-                if (comment == null)
+                if (comments == null || !comments.Any())
                 {
-                    return NotFound($"El comentario de ID: {projectId} no fue encontrado");
+                    return NotFound($"No se encontraron comentarios para el proyecto con ID: {projectId}");
                 }
 
-                var commentDto = new CommentDto
+                var commentDtos = comments.Select(comment => new CommentDto
                 {
                     Id = comment.Id,
                     Content = comment.Content,
-                    ClientId = comment.ClientId,
-                    ProjectId = comment.ProjectId
-                };
+                    ClientId = comment.ClientId
+                }).ToList();
 
-                return Ok(commentDto);
+                return Ok(commentDtos);
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error al obtener comentario por ID: {ex.Message}");
+                return BadRequest($"Error al obtener comentarios por ID de proyecto: {ex.Message}");
             }
         }
 
@@ -74,8 +73,9 @@ namespace taskManaggerAPI.Controllers
 
         }
 
-        [HttpPut("UpdateComment{id}")]
+        [HttpPut("UpdateComment/{id}")]
         public IActionResult UpdateComment([FromRoute] int id, [FromBody] CommentPutDto comment)
+
         {
             if (comment.Content == "string")
             {
