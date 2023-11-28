@@ -130,7 +130,7 @@ namespace taskManaggerAPI.Controllers
             {
                 string adminId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                if (dto.ProjectName == "string" || dto.Description == "string" || dto.AdminId == 0 || dto.ClientId == 0)
+                if (dto.ProjectName == "string" && dto.Description == "string" && dto.AdminId == 0 && dto.ClientId == 0)
                 {
                     return BadRequest("Proyecto no creado, por favor completar los campos");
                 }

@@ -15,11 +15,13 @@ namespace taskManaggerAPI.Controllers
     {
         private readonly ICommentService _commentService;
         private readonly IUserService _userService;
+        private readonly IProjectService _projectService;
 
-        public CommentController(IUserService userService, ICommentService commentService)
+        public CommentController(IUserService userService, ICommentService commentService, IProjectService projectService)
         {
             _userService = userService;
             _commentService = commentService;
+            _projectService = projectService;
         }
 
         [HttpGet("GetCommentsByProjectId/{projectId}")]
@@ -66,8 +68,15 @@ namespace taskManaggerAPI.Controllers
                 {
                     return BadRequest("Comentario no creado, por favor completar los campos");
                 }
+
                 try
                 {
+                    var project = _projectService.GetProjectById(dto.ProjectId);
+                    if (project == null || project.ClientId != int.Parse(clientId))
+                    {
+                        return BadRequest("No tienes permiso para realizar un comentario en este proyecto");
+                    }
+
                     var comment = new Comment()
                     {
                         Content = dto.Content,
