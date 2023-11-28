@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace taskManaggerAPI.Data.Models
 {
@@ -6,7 +7,7 @@ namespace taskManaggerAPI.Data.Models
     {
         [Required]
         public string Content { get; set; }
-        [Required]
+        [JsonIgnore]
         public int ClientId { get; set; }
         [Required]
         public int ProjectId { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace taskManaggerAPI.Data.Models
+﻿using System.Text.Json.Serialization;
+
+namespace taskManaggerAPI.Data.Models
 {
     public class CommentDto
     {

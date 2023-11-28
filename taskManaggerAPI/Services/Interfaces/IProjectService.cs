@@ -10,6 +10,6 @@ namespace taskManaggerAPI.Services.Interfaces
         Project GetProjectById(int id);
         int CreateProject(Project project);
         Project UpdateProject(Project project);
-        void DeleteProject(int proyectId);
+        void CompleteProject(int proyectId);
     }
 }

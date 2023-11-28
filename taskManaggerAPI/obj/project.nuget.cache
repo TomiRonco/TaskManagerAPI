@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/CpaLAoE2iOjmVtyD2x7v7znyyoOrk1Gh06ayXHgTFKJKp7FXiHmO2tk4wwyvo9L6Pag+ALLQhwhB16wRwoasw==",
+  "dgSpecHash": "QoETdilq770lKD9c4seDKIMmWONi9sjkwcn7Ud6U69hcUDcjqAELIqontPUzDlaG/h8Wz5GKPuCCWH0cUXFO6g==",
   "success": true,
-  "projectFilePath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
+  "projectFilePath": "C:\\Users\\Tomi\\Documents\\GitHub\\.NET\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tomi\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Tomi\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.24\\microsoft.aspnetcore.authentication.jwtbearer.6.0.24.nupkg.sha512",

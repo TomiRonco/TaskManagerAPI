@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using taskManaggerAPI.Data.Entities;
 using taskManaggerAPI.Data.Models;
 using taskManaggerAPI.DBContext;
@@ -28,152 +29,177 @@ namespace taskManaggerAPI.Controllers
         [HttpGet("GetAdmins")]
         public IActionResult GetAdmins()
         {
-            try
+            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+            if (role == "Admin") 
             {
-            var admins = _adminService.GetAdmins();
+                try
+                {
+                var admins = _adminService.GetAdmins();
 
-                var adminDtos = admins
-                   .Where(x => x.State == true)
-                   .Select(admin => new AdminsDto
-                   {
-                       Id = admin.Id,
-                       Role = admin.UserType,
-                       Name = admin.Name,
-                       UserName = admin.UserName,
-                       Email = admin.Email,
-                       Password = admin.Password,
-                       State = admin.State,
-                   });
-                return Ok(adminDtos);
+                    var adminDtos = admins
+                       .Where(x => x.State == true)
+                       .Select(admin => new AdminsDto
+                       {
+                           Id = admin.Id,
+                           Role = admin.UserType,
+                           Name = admin.Name,
+                           UserName = admin.UserName,
+                           Email = admin.Email,
+                           State = admin.State,
+                       });
+                    return Ok(adminDtos);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Forbid();
         }
 
         [HttpGet("GetAdminById{id}")]
         public IActionResult GetAdminById(int id)
         {
-            var admin = _adminService.GetAdminById(id);
-
-            if (admin == null)
+            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+            if (role == "Admin")
             {
-                return NotFound($"El admin de ID: {id} no fue encontrado");
+                var admin = _adminService.GetAdminById(id);
+
+                if (admin == null)
+                {
+                    return NotFound($"El admin de ID: {id} no fue encontrado");
+                }
+
+                var adminDto = new AdminsDto
+                {
+                    Id = admin.Id,
+                    Role = admin.UserType,
+                    Name = admin.Name,
+                    UserName = admin.UserName,
+                    Email = admin.Email,
+                    State = admin.State,
+                };
+                return Ok(adminDto);
             }
-
-            var adminDto = new AdminsDto
-            {
-                Id = admin.Id,
-                Role = admin.UserType,
-                Name = admin.Name,
-                UserName = admin.UserName,
-                Email = admin.Email,
-                Password = admin.Password,
-                State = admin.State,
-            };
-            return Ok(adminDto);
+            return Forbid();
         }
 
         [HttpGet("GetAdminProjects/{adminId}")]
         public IActionResult GetAdminProjects(int adminId)
         {
-            var admin = _adminService.GetAdminById(adminId);
-
-            if (admin == null)
+            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+            if (role == "Admin")
             {
-                return NotFound($"El admin de ID: {adminId} no fue encontrado");
-            }
+                var admin = _adminService.GetAdminById(adminId);
 
-            var projects = _projectService.GetAdminProjects(adminId);
-
-            var adminWithProjects = new AdminProjectsDto
-            {
-                AdminId = admin.Id,
-                AdminName = admin.Name,
-                Projects = projects.Select(p => new ProjectDto
+                if (admin == null)
                 {
-                    ProjectId = p.Id,
-                    ProjectName = p.ProjectName
-                }).ToList()
-            };
+                    return NotFound($"El admin de ID: {adminId} no fue encontrado");
+                }
 
-            return Ok(adminWithProjects);
+                var projects = _projectService.GetAdminProjects(adminId);
+
+                var adminWithProjects = new AdminProjectsDto
+                {
+                    AdminId = admin.Id,
+                    AdminName = admin.Name,
+                    Projects = projects.Select(p => new ProjectDto
+                    {
+                        ProjectId = p.Id,
+                        ProjectName = p.ProjectName
+                    }).ToList()
+                };
+                return Ok(adminWithProjects);
+            }
+            return Forbid();
         }
 
         [HttpPost("CreateNewAdmin")]
         public IActionResult CreateAdmin([FromBody] AdminPostDto dto)
         {
-            if (dto.Name == "string" || dto.Email == "string" || dto.UserName == "string" || dto.Password == "string")
+            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+            if (role == "Admin")
             {
-                return BadRequest("Admin no creado, por favor completar los campos");
-            }
-            try
-            {
-                var admin = new Admin()
+                if (dto.Name == "string" && dto.Email == "string" && dto.UserName == "string" && dto.Password == "string")
                 {
-                    Email = dto.Email,
-                    Name = dto.Name,
-                    Password = dto.Password,
-                    UserName = dto.UserName,
-                    UserType = "Admin"
-                };
-                int id = _userService.CreateUser(admin);
-                return Ok($"Admin creado exitosamente con id: {id}");
+                    return BadRequest("Admin no creado, por favor completar los campos");
+                }
+                try
+                {
+                    var admin = new Admin()
+                    {
+                        Email = dto.Email,
+                        Name = dto.Name,
+                        Password = dto.Password,
+                        UserName = dto.UserName,
+                        UserType = "Admin"
+                    };
+                    int id = _userService.CreateUser(admin);
+                    return Ok($"Admin creado exitosamente con id: {id}");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
+            return Forbid();
         }
 
         [HttpPut("UpdateAdmin{id}")]
         public IActionResult UpdateAdmin([FromRoute] int id, [FromBody] AdminPutDto admin)
         {
-            if (admin.Name == "string" || admin.Email == "string" || admin.UserName == "string" || admin.Password == "string")
+            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+            if (role == "Admin")
             {
-                return BadRequest("Admin no actualizado, por favor completar los campos");
-            }
-            var adminToUpdate = _adminService.GetAdminById(id);
-            if (adminToUpdate == null)
-            {
-                return NotFound($"Admin con ID {id} no encontrado");
-            }
-            try
-            {
-                adminToUpdate.Name = admin.Name;
-                adminToUpdate.Email = admin.Email;
-                adminToUpdate.Password = admin.Password;
-                adminToUpdate.UserName = admin.UserName;
+                if (admin.Name == "string" && admin.Email == "string" && admin.UserName == "string" && admin.Password == "string")
+                {
+                    return BadRequest("Admin no actualizado, por favor completar los campos");
+                }
+                var adminToUpdate = _adminService.GetAdminById(id);
+                if (adminToUpdate == null)
+                {
+                    return NotFound($"Admin con ID {id} no encontrado");
+                }
+                try
+                {
+                    adminToUpdate.Name = admin.Name;
+                    adminToUpdate.Email = admin.Email;
+                    adminToUpdate.Password = admin.Password;
+                    adminToUpdate.UserName = admin.UserName;
 
-                adminToUpdate = _adminService.UpdateAdmin(adminToUpdate);
-                return Ok($"Admin actualizado exitosamente");
+                    adminToUpdate = _adminService.UpdateAdmin(adminToUpdate);
+                    return Ok($"Admin actualizado exitosamente");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"Error al actualizar el Admin: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error al actualizar el Admin: {ex.Message}");
-            }
+            return Forbid();
         }
 
         [HttpDelete("DeleteAdmin/{id}")]
         public IActionResult DeleteAdmin(int id)
         {
-            try
+            string role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value.ToString();
+            if (role == "Admin")
             {
-                var existingAdmin = _adminService.GetAdminById(id);
-                if (existingAdmin == null)
+                try
                 {
-                    return NotFound($"No se encontró ningún Admin con el ID: {id}");
+                    var existingAdmin = _adminService.GetAdminById(id);
+                    if (existingAdmin == null)
+                    {
+                        return NotFound($"No se encontró ningún Admin con el ID: {id}");
+                    }
+                    _userService.DeleteUser(id);
+                    return Ok($"Admin con ID: {id} eliminado");
                 }
-                _userService.DeleteUser(id);
-                return Ok($"Admin con ID: {id} eliminado");
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-
+            return Forbid();
         }
     }
 }

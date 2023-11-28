@@ -45,7 +45,7 @@ namespace taskManaggerAPI.Services.Implementations
             return project;
         }
 
-        public void DeleteProject(int proyectId)
+        public void CompleteProject(int proyectId)
         {
             Project? projectToDelete = _taskContext.Projects.FirstOrDefault(u => u.Id == proyectId);
             projectToDelete.State = false;

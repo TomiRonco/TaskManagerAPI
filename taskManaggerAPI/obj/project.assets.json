@@ -2314,11 +2314,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Tomi\\Documents\\GitHub\\.NET\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
       "projectName": "taskManaggerAPI",
-      "projectPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
+      "projectPath": "C:\\Users\\Tomi\\Documents\\GitHub\\.NET\\Proyecto-TPI-Prog3\\taskManaggerAPI\\taskManaggerAPI.csproj",
       "packagesPath": "C:\\Users\\Tomi\\.nuget\\packages\\",
-      "outputPath": "F:\\Facultad\\PROGRAMACION 3\\Proyecto-TPI-Prog3\\taskManaggerAPI\\obj\\",
+      "outputPath": "C:\\Users\\Tomi\\Documents\\GitHub\\.NET\\Proyecto-TPI-Prog3\\taskManaggerAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Tomi\\AppData\\Roaming\\NuGet\\NuGet.Config",
