@@ -15,11 +15,12 @@ namespace taskManaggerAPI.Controllers
     {
         private readonly IProjectService _projectService;
         private readonly IUserService _userService;
-
-        public ProjectController(IUserService userService, IProjectService projectService)
+        private readonly IClientService _clientService;
+        public ProjectController(IUserService userService, IProjectService projectService, IClientService clientService)
         {
             _userService = userService;
             _projectService = projectService;
+            _clientService = clientService;
         }
 
         [HttpGet("GetProjectsCompleted")]
@@ -136,6 +137,12 @@ namespace taskManaggerAPI.Controllers
                 }
                 try
                 {
+                    var client = _clientService.GetClientById(dto.ClientId);
+                    if (client == null)
+                    {
+                        return BadRequest("El cliente especificado es de tipo Admin o no existe");
+                    }
+
                     var project = new Project()
                     {
                         ProjectName = dto.ProjectName,
@@ -199,7 +206,7 @@ namespace taskManaggerAPI.Controllers
                         return NotFound($"No se encontró ningún proyecto con el ID: {id}");
                     }
                     _projectService.CompleteProject(id);
-                    return Ok($"Project con ID: {id} completado");
+                    return Ok($"Proyecto con ID: {id} completado");
                 }
                 catch (Exception ex)
                 {
